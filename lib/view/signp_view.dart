@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
 import '../res/widget/customTextField.dart';
 import '../res/widget/passwordField.dart';
+import '../utils/color.dart';
 import '../utils/text_styles.dart';
 import '/utils/routes/routes_name.dart';
 import '/utils/utils.dart';
 import '/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../res/widget/round_button.dart';
 
 
 class SignUpView extends StatefulWidget {
-  const SignUpView({super.key});
+  const SignUpView({Key? key}) : super(key: key);
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  _SignUpViewState createState() => _SignUpViewState();
 }
 
 class _SignUpViewState extends State<SignUpView> {
- final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
+    // TODO: implement dispose
     super.dispose();
 
     _emailController.dispose();
@@ -55,6 +59,10 @@ class _SignUpViewState extends State<SignUpView> {
             SizedBox(
               height: height * .1,
             ),
+            SvgPicture.asset(
+              'assets/images/neo.svg',
+              height: 100,
+            ),
             const Align(
               child: Text('NeoEnergy', style: LoginHeaderStyle),
             ),
@@ -77,9 +85,6 @@ class _SignUpViewState extends State<SignUpView> {
             RoundButton(
               title: 'Sign Up',
               loading: authViewMode.loading,
-              rounded: true,
-              color:  Theme.of(context).primaryColor,
-              textColor: Theme.of(context).scaffoldBackgroundColor,
               onPress: () {
                 if(_emailController.text.isEmpty){
 
@@ -97,7 +102,7 @@ class _SignUpViewState extends State<SignUpView> {
                   };
 
                   authViewMode.signUpApi(data , context);
-                 // print('api hit');
+                  print('api hit');
                 }
               },
             ),
@@ -108,13 +113,13 @@ class _SignUpViewState extends State<SignUpView> {
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.login);
                 },
-                child: const Text("Don't have an accont? Login")),
+                child: Text("Don't have an accont? Login")),
             IconButton(
               onPressed: (() {
                 Navigator.pushNamed(context, RoutesName.layout);
               }),
-              icon: const Icon(Icons.home),
-              color: Theme.of(context).primaryColorDark,
+              icon: Icon(Icons.home),
+              color: AppColors.primary,
               iconSize: 40,
             ),
             SizedBox(

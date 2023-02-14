@@ -1,7 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.drona">
+    package="com.example.cero">
+    <uses-permission android:name="android.permission.INTERNET"/>
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="sms" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="tel" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="https" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="mailto" />
+    </intent>
+  </queries>
    <application
-        android:label="Drona"
+        android:label="cero"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

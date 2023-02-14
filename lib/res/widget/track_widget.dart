@@ -20,7 +20,7 @@ class _TrackWidgetState extends State<TrackWidget> {
       child: ListTile(
                       leading: Icon(
                         widget.logo,
-                        color: Theme.of(context).secondaryHeaderColor,
+                        color: AppColors.primary,
                         size: 30.0,
                       ),
                       title: Column(
@@ -29,7 +29,7 @@ class _TrackWidgetState extends State<TrackWidget> {
                           Text(
                             widget.title,
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppColors.blackColor,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -38,14 +38,14 @@ class _TrackWidgetState extends State<TrackWidget> {
                           Text(
                             widget.subtitle1,
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppColors.muted,
                               fontSize: 14,
                             ),
                           ),
                           Text(
                             widget.subtitle2,
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppColors.muted,
                               fontSize: 14,
                             ),
                           ),
@@ -57,7 +57,7 @@ class _TrackWidgetState extends State<TrackWidget> {
                           Text(
                             widget.weight,
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppColors.blackColor,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -66,7 +66,7 @@ class _TrackWidgetState extends State<TrackWidget> {
                           Text(
                             'Edit',
                             style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppColors.muted,
                               fontSize: 14,
                             ),
                           ),

@@ -1,12 +1,12 @@
 
 
-import 'package:drona/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import '/model/user_model.dart';
 import '/respository/auth_repository.dart';
 import '/utils/routes/routes_name.dart';
 import '/utils/utils.dart';
+import '/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AuthViewModel with ChangeNotifier {

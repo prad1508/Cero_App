@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import '/view_model/services/splash_services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashView extends StatefulWidget {
-  const SplashView({super.key});
+  const SplashView({Key? key}) : super(key: key);
 
   @override
-  State<SplashView> createState() => _SplashViewState();
+  _SplashViewState createState() => _SplashViewState();
 }
 
 class _SplashViewState extends State<SplashView> {
- SplashServices splashServices = SplashServices();
+
+  SplashServices splashServices = SplashServices();
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
     splashServices.checkAuthentication(context);
@@ -21,7 +24,7 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Container(
        color: Colors.white,
-      child: const Image(image: AssetImage('assets/images/drona_logo.png'), fit: BoxFit.cover,),
+      child: Image(image: AssetImage('assets/images/neo.png')),
     );
   }
 }

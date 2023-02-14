@@ -1,18 +1,17 @@
+
+
 class AppUrl {
-  static var baseUrl = 'https://reqres.in';
 
-  static var moviesBaseUrl =
-      'https://wepora.com/Matrimony/api';
 
-  static var loginEndPint = baseUrl + '/login/login';
-  static var consumptionListEndPoint = 'http://13.233.143.175/api/v1/requests/load_energy_consumption?duration=';
+  static var baseUrl = 'https://reqres.in' ;
 
-  static var graphicalListEndPoint = 'http://13.233.143.175/api/v1/requests/get_requests_by_date_range?from=';
-   static var ohlcListEndPoint = 'http://13.233.143.175/api/v1/requests/load_current_data?duration=';
+  static var moviesBaseUrl = 'https://dea91516-1da3-444b-ad94-c6d0c4dfab81.mock.pstmn.io/' ;
 
-  static var registerApiEndPoint = baseUrl + '/api/register';
+  static var loginEndPint =  baseUrl + '/api/login' ;
 
-  static var moviesListEndPoint = moviesBaseUrl + 'movies_list';
+  static var registerApiEndPoint =  baseUrl + '/api/register' ;
 
-  static var dashboardListEndPoint = 'http://13.233.143.175/api/v1/requests?page=1';
+  static var moviesListEndPoint =  moviesBaseUrl + 'movies_list' ;
+
+
 }

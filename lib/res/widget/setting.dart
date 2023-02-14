@@ -30,7 +30,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                                 color: Colors.amber),
                             child: Icon(
                               widget.iconName,
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                              color: AppColors.whiteColor,
                             )),
                         title: Text(widget.title),
                         trailing: IconButton(

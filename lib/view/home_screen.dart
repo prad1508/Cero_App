@@ -1,98 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
-import '../res/language/language.dart';
-import '../res/widget/drawer_widget.dart';
+import '/data/response/status.dart';
+import '/model/movies_model.dart';
+import '/utils/routes/routes_name.dart';
+import '/utils/utils.dart';
+import '/view_model/home_view_model.dart';
+import '/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late ScrollController _scrollController;
-  Color _textColor = Colors.white;
-  static const kExpandedHeight = 100.0;
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
+
+  HomeViewViewModel  homeViewViewModel = HomeViewViewModel();
+  
   @override
   void initState() {
     // TODO: implement initState
+    homeViewViewModel.fetchMoviesListApi();
     super.initState();
-
-    _scrollController = ScrollController()
-      ..addListener(() {
-        setState(() {
-          _textColor = _isSliverAppBarExpanded ? Colors.white : Colors.black;
-        });
-      });
   }
-
-  bool get _isSliverAppBarExpanded {
-    return _scrollController.hasClients &&
-        _scrollController.offset > kExpandedHeight - kToolbarHeight;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
+    final userPrefernece = Provider.of<UserViewModel>(context);
     return Scaffold(
-      drawer: const DrawerWidget(),
-      body: MaterialApp(
-          supportedLocales: _localization.supportedLocales,
-          localizationsDelegates: _localization.localizationsDelegates,
-          debugShowCheckedModeBanner: false,
-          home: SafeArea(
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  snap: false,
-                  pinned: true,
-                  floating: false,
-                  centerTitle: true,
-                  title: _isSliverAppBarExpanded
-                      ? Text("Neoenergy ⚡",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 16.0,
-                          ))
-                      : null,
-                  flexibleSpace: _isSliverAppBarExpanded
-                      ? null
-                      : FlexibleSpaceBar(
-                          background: Image.asset(
-                          "assets/images/login2.png",
-                          fit: BoxFit.contain,
-                        )),
-                  expandedHeight: 120,
-                  backgroundColor: Colors.black,
-                  actions: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      tooltip: 'Share',
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => Material(
-                      child: Container(
-                                    height: 700,
-                                    decoration: const BoxDecoration(
-                                       
-                                                ),
-                                    child:  Text('Current language is: ${_localization.getLanguageName()} ${AppLocale.title.getString(context)}', style: Theme.of(context).textTheme.titleLarge,),
-                                  ),
-                    ),
-                    childCount: 1,
-                  ),
-                )
-              ],
-            ),
-          )),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          InkWell(
+              onTap: (){
+                userPrefernece.remove().then((value){
+                  Navigator.pushNamed(context, RoutesName.login);
+                });
+              },
+              child: Center(child: Text('Logout'))),
+          SizedBox(width: 20,)
+        ],
+      ),
+      body: ChangeNotifierProvider<HomeViewViewModel>(
+        create: (BuildContext context) => homeViewViewModel,
+        child: Consumer<HomeViewViewModel>(
+            builder: (context, value, _){
+              switch(value.moviesList.status){
+                case Status.LOADING:
+                  return Center(child: CircularProgressIndicator());
+                case Status.ERROR:
+                  return Center(child: Text(value.moviesList.message.toString()));
+                case Status.COMPLETED:
+                  return ListView.builder(
+                      itemCount: value.moviesList.data!.movies!.length,
+                      itemBuilder: (context,index){
+                    return Card(
+                      child: ListTile(
+
+                        leading: Image.network(
+
+                            value.moviesList.data!.movies![index].posterurl.toString(),
+                        errorBuilder: (context, error, stack){
+                              return Icon(Icons.error, color: Colors.red,);
+                        },
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(value.moviesList.data!.movies![index].title.toString()),
+                        subtitle: Text(value.moviesList.data!.movies![index].year.toString()),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(Utils.averageRating(value.moviesList.data!.movies![index].ratings!).toStringAsFixed(1)),
+                            Icon(Icons.star , color: Colors.yellow,)
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+
+              }
+              return Container();
+            }),
+      ) ,
     );
   }
 }
